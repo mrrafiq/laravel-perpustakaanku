@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\Paginator;
 
 use Illuminate\Http\Request;
 use App\Models\Borrow;
@@ -20,7 +19,7 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        $borrows = Borrow::with(['member','book'])->get();
+        $borrows = Borrow::with(['member','book'])->paginate(10);
 
         return view('borrow',[
             "title" => "Peminjaman",
@@ -114,19 +113,11 @@ class BorrowController extends Controller
     public function find(Request $request)
     {
         $request->validate([
-            'search' => 'required|string'
+            'search' => 'nullable|string'
         ]);
 
         $search = $request->search;
-        // $status = Borrow::select('status')->where('status',0)->get();
-        // $int_stat = (int)$status;
-        // if($int_stat == 0){
-        //     $name = "Belum Dikembalikan";
-        // }else {
-        //     $name = "Sudah Dikembalikan";
-        // }
-        
-        $borrow = Borrow::with('member','book')
+        $borrows = Borrow::with('member','book')
         ->where('borrow_date','LIKE', '%'.$search.'%')
         ->orWhere('return_date','LIKE', '%'.$search.'%')
         ->orWhereHas('book', function (Builder $query) use ($search) {
@@ -135,13 +126,18 @@ class BorrowController extends Controller
         ->orWhereHas('member', function (Builder $query) use ($search) {
             $query->where('name', 'LIKE', '%'.$search.'%');
         })
-        ->get();
+        ->paginate(10);
+        dd($borrows);
 
-        return view('borrow',['borrow' => $borrow, "title" => "Pencarian Peminjaman", "head" => "Peminjaman", "message" => "Berikut merupakan hasil pencarian dari '$search'."]);
+        return view('borrow',[
+            "title" => "Pencarian Peminjaman", 
+            "head" => "Peminjaman", 
+            "message" => "Berikut merupakan hasil pencarian dari '$search'."], 
+            compact('borrows'));
     }
 
     public function hasReturned(){
-        $borrows = Borrow::where('status',1)->get();
+        $borrows = Borrow::where('status',1)->paginate(10);
         return view('borrow',[
             "title" => "Peminjaman",
             "head" => "Peminjaman",
@@ -150,7 +146,7 @@ class BorrowController extends Controller
     }
 
     public function hasNotReturned(){
-        $borrows = Borrow::where('status',0)->get();
+        $borrows = Borrow::where('status',0)->paginate(10);
         return view('borrow',[
             "title" => "Peminjaman",
             "head" => "Peminjaman",

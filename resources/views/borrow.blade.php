@@ -7,8 +7,7 @@
         <div class="col-md-4">
             <form action="{{ route('findBorrow') }}" method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="search" placeholder="Cari nama anggota...."
-                        name="search" />
+                    <input type="text" class="form-control" id="search" placeholder="Cari apapun...." name="search" />
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
                     </div>
@@ -106,6 +105,13 @@
                 <?php endforeach?>
             </tbody>
         </table>
+        <div class="mb-5">
+            Halaman : {{ $borrows->currentPage() }} <br>
+            Jumlah Data : {{ $borrows->total() }}
+            <div class=" pull-right">
+                {{ $borrows->links() }}
+            </div>
+        </div>
     </div>
 
 </main>

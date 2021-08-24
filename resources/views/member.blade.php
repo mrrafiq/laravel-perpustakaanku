@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <?php
-          foreach($member as $member): ?>
+          foreach($members as $member): ?>
             <tr>
                 <th scope="row">{{ $member->unique_num }}</th>
                 <td>{{ $member->name }}</td>
@@ -65,21 +65,12 @@
             <?php endforeach ?>
         </tbody>
     </table>
-    <!-- Pagination -->
-    <!-- <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link " href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item " aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav> -->
+    <div class="mb-5">
+        Halaman : {{ $members->currentPage() }} <br>
+        Jumlah Data : {{ $members->total() }}
+        <div class=" pull-right">
+            {{ $members->links() }}
+        </div>
+    </div>
 </main>
 @endsection

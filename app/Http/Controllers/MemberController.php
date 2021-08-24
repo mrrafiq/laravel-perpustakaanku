@@ -15,13 +15,13 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $member = DB::table('members')->orderBy('id')->get();
+        $members = DB::table('members')->orderBy('id')->paginate(20);
 
         return view('member',
         ["title" => "Keanggotaan", 
         "head" => "Keanggotaan", 
         "message" => "Berikut merupakan daftar anggota PerpustakaanKu."
-        ], compact('member'));
+        ], compact('members'));
     }
 
     public function find(Request $request)
@@ -34,7 +34,7 @@ class MemberController extends Controller
             ->orWhere('name','LIKE', '%' .$search. '%')
             ->orWhere('phone','LIKE', '%' .$search. '%')
             ->orWhere('address','LIKE', '%' .$search. '%')
-            ->get();
+            ->paginate(20);
     
         return view('member',['member' => $member, "title" => "Pencarian Anggota", "head" => "Daftar Anggota",
         "message" => "Berikut merupakan hasil pencarian dari '$search'."])->with('success', 'Data Anggota ditemukan!');

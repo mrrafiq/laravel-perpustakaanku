@@ -40,80 +40,64 @@
                     </button>
                 </a>
             </div>
-            <!-- <a href="/book/book-category" class="text-decoration-none text-primary fs-6 me-3"><i class="fa fa-list"></i>
-                Lihat Kategori</a>
-            <a href="/book/authors" class="text-decoration-none text-secondary fs-6 me-3"><span><i
-                        class="bi bi-person-lines-fill"></i></span> Lihat
-                Pengarang</a> -->
-            <!-- <img
-                    src="{{ asset('/assets/icon/user-edit-solid.svg') }}" alt="" height="22"
-                    width="22"> -->
         </div>
-    </div>
-    <br>
-    @if($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
+        <br>
+        @if($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+        @if($message = Session::get('danger'))
+            <div class="alert alert-danger">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col">Judul Buku</th>
+                    <th scope="col">Pengarang</th>
+                    <th scope="col">Penerbit</th>
+                    <th scope="col">Tahun Terbit</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+            foreach($books as $book): ?>
+                <tr>
+                    <th scope="row">{{ $book->id }}</th>
+                    <td>{{ $book->category->name }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author->name }}</td>
+                    <td>{{ $book->publisher->name }}</td>
+                    <td>{{ $book->year }}</td>
+                    <td>{{ $book->stock }}</td>
+                    <td>
+                        <a href="{{ url('book/edit-book/'.$book->id) }}"><i
+                                class="fa fa-pencil text-warning"></i></a>
+                        <form action="{{ url('book/delete-book/'.$book->id) }}"
+                            onsubmit="return confirm('Apakah anda yakin menghapus data?');" class="d-inline"
+                            method="post">
+                            @method('delete')
+                            @csrf
+                            <button class="btn btn-sm" type="submit"><i
+                                    class="ms-3 fa fa-trash text-danger"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+        <div class="mb-5">
+            Halaman : {{ $books->currentPage() }} <br>
+            Jumlah Data : {{ $books->total() }} <br>
+            <div class=" pull-right">
+                {{ $books->links() }}
+            </div>
         </div>
-    @endif
-    @if($message = Session::get('danger'))
-        <div class="alert alert-danger">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Kategori</th>
-                <th scope="col">Judul Buku</th>
-                <th scope="col">Pengarang</th>
-                <th scope="col">Penerbit</th>
-                <th scope="col">Tahun Terbit</th>
-                <th scope="col">Stok</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach($book as $book): ?>
-            <tr>
-                <th scope="row">{{ $book->id }}</th>
-                <td>{{ $book->category->name }}</td>
-                <td>{{ $book->title }}</td>
-                <td>{{ $book->author->name }}</td>
-                <td>{{ $book->publisher->name }}</td>
-                <td>{{ $book->year }}</td>
-                <td>{{ $book->stock }}</td>
-                <td>
-                    <a href="{{ url('book/edit-book/'.$book->id) }}"><i
-                            class="fa fa-pencil text-warning"></i></a>
-                    <form action="{{ url('book/delete-book/'.$book->id) }}"
-                        onsubmit="return confirm('Apakah anda yakin menghapus data?');" class="d-inline" method="post">
-                        @method('delete')
-                        @csrf
-                        <button class="btn btn-sm" type="submit"><i class="ms-3 fa fa-trash text-danger"></i></button>
-                    </form>
-                </td>
-            </tr>
-            <?php endforeach ?>
-        </tbody>
-    </table>
-    <!-- Pagination -->
-    <!-- <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link " href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item " aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav> -->
 </main>
 @endsection

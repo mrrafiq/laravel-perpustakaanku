@@ -69,6 +69,9 @@ class CategoryController extends Controller
      */
     public function edit(Request $request)
     {
+        $this->validate($request,[
+            'name' => 'required|unique:categories|max:100'
+        ]);
         $data = DB::table('categories')->where('id', $request->id)->first();
         return view('update/edit-category',['data' => $data, "title" => "Edit Kategori"]);
     }

@@ -41,7 +41,7 @@ class PublisherController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|max:100',
+            'name' => 'required|max:100|unique:publishers',
             'address' => 'required|max:100',
             'email' => 'required'
         ]);

@@ -20,11 +20,11 @@ class BookController extends Controller
      */
     public function index()
     {
-        $book = Book::with(['category','author','publisher'])->paginate(20);
+        $books = Book::with(['category','author','publisher'])->paginate(10);
         return view('book',
         ["title" => "Buku",
         "head" => "Daftar Buku",
-        "message" => "Berikut merupakan daftar buku dari perpustakaan ini."], compact('book'));
+        "message" => "Berikut merupakan daftar buku dari perpustakaan ini."], compact('books'));
     }
 
     public function find(Request $request)
@@ -33,24 +33,24 @@ class BookController extends Controller
             'search' => 'required|string'
         ]);
 
-        $search = '%' . $request->search . '%';
+        $search = $request->search;
 
-        $book = Book::with('category', 'author', 'publisher')
-            ->where('title', 'LIKE', $search)
-            ->orWhere('year', 'LIKE', $search)
-            ->orWhere('stock', 'LIKE', $search)
+        $books = Book::with('category', 'author', 'publisher')
+            ->where('title', 'LIKE', '%'.$search.'%')
+            ->orWhere('year', 'LIKE','%'.$search.'%')
+            ->orWhere('stock', 'LIKE', '%'.$search.'%')
             ->orWhereHas('category', function (Builder $query) use ($search) {
-                $query->where('name', 'LIKE', $search);
+                $query->where('name', 'LIKE', '%'.$search.'%');
             })
             ->orWhereHas('author', function (Builder $query) use ($search) {
-                $query->where('name', 'LIKE', $search);
+                $query->where('name', 'LIKE', '%'.$search.'%');
             })
             ->orWhereHas('publisher', function (Builder $query) use ($search) {
-                $query->where('name', 'LIKE', $search);
+                $query->where('name', 'LIKE', '%'.$search.'%');
             })
-            ->get();
+            ->paginate(10);
 
-        return view('book', ['book' => $book, "title" => "Pencarian Buku", "head" => "Daftar Buku", "message" => "Berikut merupakan hasil pencarian dari '$search'."]);
+        return view('book', ['books' => $books, "title" => "Pencarian Buku", "head" => "Daftar Buku", "message" => "Berikut merupakan hasil pencarian dari '$search'."]);
         
     }
 
