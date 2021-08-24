@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBorrowsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('borrows', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('member_id')->constrained('members');
+            $table->foreignId('book_id')->constrained('books');
+            $table->date('borrow_date');
+            $table->date('return_date');
+            $table->bigInteger('fine');
+            $table->integer('status');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('borrows');
+    }
+}

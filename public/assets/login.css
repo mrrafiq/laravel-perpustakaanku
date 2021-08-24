@@ -1,0 +1,26 @@
+#card-login {
+  margin-top: 10px;
+}
+
+.login-card-img {
+  width: 450px;
+  height: 600px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+}
+
+.login-card {
+  margin-top: 20px;
+  border-radius: 42px;
+  border-color: #f8f9fa;
+}
+
+.form-login {
+  width: 420px;
+  border-radius: 10px;
+}
+
+.content-body {
+  margin-top: 50px;
+  margin-left: 20px;
+}
