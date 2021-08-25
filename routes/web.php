@@ -8,6 +8,7 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,13 +26,9 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
 
 route::group(['middleware' => ['auth']], function(){
-    Route::get('/', function () {
-        return view('dashboard',[
-            "title" => "Dashboard",
-            "head" => "Dashboard",
-            "message" => "Selamat Datang",
-        ]);
-    });
+    //Route Dashboard
+    Route::get('/',[DashboardController::class,'index']);
+
     //CRUD untuk Buku
     Route::get('/book',[BookController::class,'index']);
     Route::get('/book/search',[BookController::class,'find'])->name('findBook');

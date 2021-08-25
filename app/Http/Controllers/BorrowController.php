@@ -127,7 +127,6 @@ class BorrowController extends Controller
             $query->where('name', 'LIKE', '%'.$search.'%');
         })
         ->paginate(10);
-        dd($borrows);
 
         return view('borrow',[
             "title" => "Pencarian Peminjaman", 
