@@ -15,7 +15,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = DB::table('members')->orderBy('id')->paginate(20);
+        $members = DB::table('members')->orderBy('id')->paginate(10);
 
         return view('member',
         ["title" => "Keanggotaan", 

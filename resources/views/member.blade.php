@@ -36,6 +36,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th scope="col">No</th>
                 <th scope="col">Nomor Unik</th>
                 <th scope="col">Nama</th>
                 <th scope="col">No Handphone</th>
@@ -45,8 +46,10 @@
         </thead>
         <tbody>
             <?php
-          foreach($members as $member): ?>
+            $no = 0;
+          foreach($members as $member): $no++?>
             <tr>
+                <th>{{ $member->id }}</th>
                 <th scope="row">{{ $member->unique_num }}</th>
                 <td>{{ $member->name }}</td>
                 <td>{{ $member->phone }}</td>
