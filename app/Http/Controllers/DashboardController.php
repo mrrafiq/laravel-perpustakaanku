@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\Borrow;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -21,18 +22,31 @@ class DashboardController extends Controller
         $member_total = Member::count();
         $book_total = Book::count();
         $borrow_total = Borrow::count('id');
-        // $per_book = DB::table('borrows')->count('id')->groupBy('borrows.book_id');
-        // // $book_favorite = Borrow::with('book')->orderBy($borrow_total)->groupBy('book_id')->first();
-        // // $book_favorite = DB::table('borrows')
-        // //                     ->join('books', 'borrows.book_id', '=', 'books.id')
-        // //                     ->select('books.title')->orderBy('borrows.id')->groupBy('books.title')->limit(1);
+        //$per_book = DB::table('borrows')->groupBy('borrows.book_id')->count('id');
+        //  $book_favorite = Borrow::with('book')->orderBy($borrow_total)->groupBy('book_id')->first();
+        // $book_favorite = DB::table('borrows')
+        //                 ->join('books', 'borrows.book_id', '=', 'books.id')
+        //                 ->select('books.title')->orderBy('borrows.id')->groupBy('books.title')->limit(1);
         // dd($per_book);
+        // $book_favorite = DB::table('borrows')->join('books', 'borrows.book_id', '=', 'books.id')
+        //                     ->select('books.title')
+        //                     ->groupBy('books.id')
+        //                     ->orderByDesc(DB::table('borrows')->count('id')->groupBy('book_id'))
+        //                     ->first();
+        //dd($book_favorite);
         // $book_favorite_data = json_encode($book_favorite);
+        
+        $now = Carbon::now();
+        $year_now = $now->year;
+        $month_now = $now->month;
+        $result = DB::table('borrows')
+                    ->whereYear('borrow_date', $year_now)
+                    ->get();
         return view('dashboard',[
             'member_total' => $member_total,
             'book_total' => $book_total,
             'borrow_total' => $borrow_total,
-            'book_favorite' => $book_favorite,
+            // 'book_favorite' => $book_favorite,
             "title" => "Dashboard",
             "head" => "Dashboard",
             "message" => "Selamat Datang",
