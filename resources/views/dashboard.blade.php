@@ -4,7 +4,7 @@
     <p class="fs-1">{{ $title }}</p>
     <p class="fs-5 text-muted">{{ $message }} <strong>{{ Auth::user()->name }}</strong>!</p>
     <hr>
-    <div class="row mb-3">
+    <div class="row mb-5">
         <div class="col-md-4">
             <div class="card" style="width: 20rem;">
                 <div class="card-header">

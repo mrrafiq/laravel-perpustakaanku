@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ChartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,7 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 route::group(['middleware' => ['auth']], function(){
     //Route Dashboard
     Route::get('/',[DashboardController::class,'index']);
+    
 
     //CRUD untuk Buku
     Route::get('/book',[BookController::class,'index']);

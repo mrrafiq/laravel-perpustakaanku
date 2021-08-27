@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Borrow;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class ChartController extends Controller
 {
@@ -13,14 +16,11 @@ class ChartController extends Controller
      */
     public function index()
     {
-        $status = Borrow::select('status')->groupBy('status')->count();
-        $count = Borrow::select(DB::raw('count(id) as total, status'))->groupBy('status')->get();
-        $datas = array(0,0);
-        foreach($status as $index => $status)
-        {
-            $datas[$status] = $count[$index];
-        }
-        return view('chart', compact('datas'));
+        $count0 = Borrow::where('status', 0)->count();
+        $count1 = Borrow::where('status', 1)->count();
+        $count = array($count0, $count1);
+        // return view('chart', ["datas" => $datas]);
+        return response()->json($count);
     }
 
     /**
