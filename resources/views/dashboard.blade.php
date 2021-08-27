@@ -51,6 +51,23 @@
             </div>
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="d-flex justify-content-center">
+            <div class="card" style="width: 20rem;">
+                <div class="card-header">
+                    <p class="fs-6 text-dark text-center">Buku Favorit</p>
+                </div>
+                <div class="card-body">
+                    <p class="fs-3 text-center fw-bold text-dark">
+                        {{ $book_favorite->title }}
+                    </p>
+                    <p class="text-center fs-6 text-dark">
+                        Dipinjam sebanyak <span class="fw-bold">{{ $book_favorite_total->total }}</span> buku.
+                    </p>   
+                </div>
+            </div>
+        </div>
+    </div>
 
     @include('chart')
 </main>

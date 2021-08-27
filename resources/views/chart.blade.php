@@ -22,7 +22,7 @@
         data: {
             labels: ["Belum Dikembalikan", "Sudah Dikembalikan"],
             datasets: [{
-                label: '# of Votes',
+                label: '',
                 data:data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

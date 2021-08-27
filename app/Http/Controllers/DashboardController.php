@@ -22,20 +22,19 @@ class DashboardController extends Controller
         $member_total = Member::count();
         $book_total = Book::count();
         $borrow_total = Borrow::count('id');
-        //$per_book = DB::table('borrows')->groupBy('borrows.book_id')->count('id');
-        //  $book_favorite = Borrow::with('book')->orderBy($borrow_total)->groupBy('book_id')->first();
-        // $book_favorite = DB::table('borrows')
-        //                 ->join('books', 'borrows.book_id', '=', 'books.id')
-        //                 ->select('books.title')->orderBy('borrows.id')->groupBy('books.title')->limit(1);
-        // dd($per_book);
-        // $book_favorite = DB::table('borrows')->join('books', 'borrows.book_id', '=', 'books.id')
-        //                     ->select('books.title')
-        //                     ->groupBy('books.id')
-        //                     ->orderByDesc(DB::table('borrows')->count('id')->groupBy('book_id'))
-        //                     ->first();
-        //dd($book_favorite);
-        // $book_favorite_data = json_encode($book_favorite);
-        
+        $book_favorite = DB::table('borrows')
+                        ->select('books.title')
+                        ->join('books', 'borrows.book_id' , '=', 'books.id')
+                        ->groupBy('books.title')
+                        ->orderBy(DB::raw('count(borrows.id)'), 'desc')
+                        ->first();
+                        
+        $book_favorite_total = DB::table('borrows')
+                        ->select(DB::raw('count("book_id") as total'))
+                        ->join('books', 'borrows.book_id' , '=', 'books.id')
+                        ->groupBy('books.title')
+                        ->orderBy(DB::raw('count(borrows.id)'), 'desc')
+                        ->first();
         $now = Carbon::now();
         $year_now = $now->year;
         $month_now = $now->month;
@@ -46,7 +45,8 @@ class DashboardController extends Controller
             'member_total' => $member_total,
             'book_total' => $book_total,
             'borrow_total' => $borrow_total,
-            // 'book_favorite' => $book_favorite,
+            'book_favorite' => $book_favorite,
+            'book_favorite_total' => $book_favorite_total,
             "title" => "Dashboard",
             "head" => "Dashboard",
             "message" => "Selamat Datang",
