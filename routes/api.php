@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/chart',[ChartController::class,'index']);
+Route::get('/chart2',[ChartController::class,'chart']);
 

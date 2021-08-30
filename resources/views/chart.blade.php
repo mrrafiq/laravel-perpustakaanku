@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row">
     <div class="col md-auto p-4">
         <div class="card mb-4 bg-light">
             <div class="card-body">
@@ -11,7 +11,20 @@
         </div>
     </div>
 </div>
-
+<div class="row mb-3">
+    <div class="col md-auto p-4">
+        <div class="card mb-4 bg-light">
+            <div class="card-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center"><p class="fs-4 fw-bold">Grafik Performa Peminjaman bulan</p></div>
+                    <div class="panel-body">
+                        <canvas id="chartPerformance" class="p-5"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $.get( "/api/chart", function(data) {
@@ -46,6 +59,35 @@
         }
         });
     });
-    
+</script>
 
+<script>
+    $.get( "/api/chart2", function(data) {
+        console.log(data);
+        var ctx = document.getElementById("chartPerformance");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.label,
+                datasets: [{
+                    label: '',
+                    data: data.total,
+                    borderColor: [
+                        'rgb(75, 192, 192)',
+                    ],
+                    tension: 0.1,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
 </script>

@@ -36,6 +36,7 @@ class DashboardController extends Controller
                         ->orderBy(DB::raw('count(borrows.id)'), 'desc')
                         ->first();
         $now = Carbon::now();
+        
         $year_now = $now->year;
         $month_now = $now->month;
         $result = DB::table('borrows')
