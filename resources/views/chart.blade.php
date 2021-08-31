@@ -16,7 +16,7 @@
         <div class="card mb-4 bg-light">
             <div class="card-body">
                 <div class="panel panel-default">
-                    <div class="panel-heading text-center"><p class="fs-4 fw-bold">Grafik Performa Peminjaman bulan</p></div>
+                    <div class="panel-heading text-center"><p class="fs-4 fw-bold">Grafik Performa Peminjaman bulan Ini</p></div>
                     <div class="panel-body">
                         <canvas id="chartPerformance" class="p-5"></canvas>
                     </div>
@@ -70,7 +70,7 @@
             data: {
                 labels: data.label,
                 datasets: [{
-                    label: '',
+                    label: 'Jumlah Peminjaman',
                     data: data.total,
                     borderColor: [
                         'rgb(75, 192, 192)',

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Borrow;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class ChartController extends Controller
 {
@@ -20,19 +21,14 @@ class ChartController extends Controller
         $count1 = Borrow::where('status', 1)->count();
         $count = array($count0, $count1);
 
-        $days = Borrow::select(DB::raw('DAY(borrow_date)'))->get();
-           
-        // return view('chart', ["datas" => $datas]);
-        
-        
         return response()->json($count);
         
     }
 
     public function chart(){
         $total = Borrow::select(DB::raw('COUNT(id) as total'))->groupBy('borrow_date')->get()->pluck('total');
-
-        $label = Borrow::distinct()->select(DB::raw('day(borrow_date) as label'))->get()->pluck('label');
+        $month_now = Carbon::now()->month;
+        $label = Borrow::distinct()->select(DB::raw('day(borrow_date) as label'))->whereMonth('borrow_date',$month_now)->get()->pluck('label');
         return response()->json(["total"=> $total,"label"=>$label]);
     }
 
