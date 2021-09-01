@@ -121,9 +121,9 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $member = Member::find($id);
+        $member = Member::find($request->unique_num);
         $member->delete();
         return redirect('/members')->with('danger','Data berhasil dihapus!');
     }
