@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MemberController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\PublisherController;
+use App\Http\Controllers\API\AuthorController;
 
 
 
@@ -28,7 +31,19 @@ Route::group(['middleware' => 'auth:sanctum'], function()
     Route::get('/member',[MemberController::class,'member']);
 
     //CRUD untuk Kategori
-    
+    Route::get('/category',[CategoryController::class,'category']);
+    Route::post('/category/create', [CategoryController::class, 'create']);
+    Route::post('/category/update', [CategoryController::class, 'update']);
+
+    //CRUD untuk Penerbit
+    Route::get('/publisher',[PublisherController::class,'publisher']);
+    Route::post('/publisher/create', [PublisherController::class, 'create']);
+    Route::post('/publisher/update', [PublisherController::class, 'update']);
+
+    //CRUD untuk Penulis
+    Route::get('/author',[AuthorController::class,'author']);
+    Route::post('/author/create', [AuthorController::class, 'create']);
+    Route::post('/author/update', [AuthorController::class, 'update']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
 });

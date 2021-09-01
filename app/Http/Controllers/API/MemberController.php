@@ -8,9 +8,25 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
-    public function member(Member $member)
+    public function member(Request $request)
     {
-        $members = Member::all();
+        $id = $request->id;
+        $unique_num = $request->unique_num;
+        $name = $request->name;
+
+        if ($id == null && $unique_num == null && $name == null) {
+            $members = Member::all();
+        }
+        elseif ($id != null) {
+            $members = Member::where('id', $id)->get();
+        }
+        elseif ($unique_num != null) {
+            $members = Member::where('unique_num', $unique_num)->get();
+        }
+        elseif ($name != null) {
+            $members = Member::where('name','LIKE', '%'.$name.'%')->get();
+        }
+
         return response()->json($members);
     }
     
