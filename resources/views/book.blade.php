@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 mt-3">
+        <div class="col-md-8 mt-3 mb-3">
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <a href="/book/book-category">
                     <button class="btn btn-outline-danger "><i class="fa fa-list"></i>

@@ -46,6 +46,10 @@ class PublisherController extends Controller
 
     public function update(Request $request)
     {
+        $request->validateWithBag($request,[
+            'id' => ['required','exists:publishers,id'],
+        ]);
+
         DB::table('publishers')->where('id', $request->id)->update([
             'name' => $request->name,
             'address' => $request->address,

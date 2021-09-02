@@ -54,7 +54,15 @@ class MemberController extends Controller
 
     public function updateMember(Request $request)
     {
-        DB::table('members')->where('unique_num', $request->unique_num)->update([
+
+        $request->validateWithBag($request,[
+            'id' => ['required','exists:members,id'],
+            'name' => ['required'],
+            'phone' => ['required'],
+            'address' => ['required'],
+        ]);
+
+        DB::table('members')->where('unique_num', $request->id)->update([
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address
@@ -68,7 +76,10 @@ class MemberController extends Controller
 
     public function deleteMember(Request $request)
     {
-        $member = Member::where('unique_num',$request->unique_num);
+        $request->validateWithBag($request,[
+            'id' => ['required','exists:members,id'],
+        ]);
+        $member = Member::where('id',$request->id);
         $member->delete();
         return response()->json([
             'message' => 'Delete Data Success',

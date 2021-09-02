@@ -8,6 +8,8 @@ use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PublisherController;
 use App\Http\Controllers\API\AuthorController;
+use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\BorrowController;
 
 
 
@@ -44,6 +46,18 @@ Route::group(['middleware' => 'auth:sanctum'], function()
     Route::get('/author',[AuthorController::class,'author']);
     Route::post('/author/create', [AuthorController::class, 'create']);
     Route::post('/author/update', [AuthorController::class, 'update']);
+
+    //CRUD untuk Buku
+    Route::get('/book',[BookController::class,'book']); 
+    Route::post('/book/create', [BookController::class, 'create']);
+    Route::post('/book/update', [BookController::class, 'update']);
+    Route::post('/book/delete', [BookController::class, 'delete']);
+
+    //CRUD untuk Peminjaman
+    Route::get('/borrow',[BorrowController::class,'borrow']); 
+    Route::post('/borrow/create', [BorrowController::class, 'create']);
+    Route::post('/borrow/update', [BorrowController::class, 'update']);
+
 
     Route::get('/logout', [AuthController::class, 'logout']);
 });

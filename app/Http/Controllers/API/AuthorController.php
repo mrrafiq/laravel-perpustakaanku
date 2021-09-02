@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Author;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 
 class AuthorController extends Controller
 {
@@ -42,8 +43,13 @@ class AuthorController extends Controller
 
     public function update(Request $request)
     {
-        DB::table('authors')->where('name', $request->name)->update([
-            'name' => $request->name_new
+        $request->validateWithBag($request,[
+            'id' => ['required','exists:authors,id'],
+        ]);            
+
+        DB::table('authors')->where('id', $request->id)->update([
+            'name' => $request->name,
+            'born_date' => $request->born_date,
         ]);
 
         return response()->json([

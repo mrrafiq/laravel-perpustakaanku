@@ -42,8 +42,12 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
-        DB::table('categories')->where('name', $request->name)->update([
-            'name' => $request->name_new
+        $this->validateWithBag($request,[
+            'id' => ['required','exists:categories,id'],
+        ]);
+
+        DB::table('categories')->where('id', $request->id)->update([
+            'name' => $request->name
         ]);
 
         return response()->json([
