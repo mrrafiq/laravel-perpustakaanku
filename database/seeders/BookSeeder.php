@@ -14,6 +14,15 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-       //
+        Book::create([
+            "category_id" => "1",
+            "title" => "Kelinci dan Kura-kura",
+            "author_id" => "1",
+            "publisher_id" => "1",
+            "year" => "2006",
+            "stock" => "50",
+            
+        ]       
+        );
     }
 }
